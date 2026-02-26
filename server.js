@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 // ===============================
-// APP INITIALIZATION
+// APP SETUP
 // ===============================
 const app = express();
 
@@ -16,7 +16,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files from "public" folder
+// ✅ Serve static files from public folder
 app.use(express.static("public"));
 
 // ===============================
@@ -31,8 +31,10 @@ mongoose.connect(process.env.MONGO_URI)
   });
 
 // ===============================
-// TEST API ROUTE
+// API ROUTES
 // ===============================
+
+// Test API route
 app.get("/api/test", (req, res) => {
   res.json({ message: "API is working correctly 🚀" });
 });
