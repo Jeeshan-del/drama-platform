@@ -12,6 +12,7 @@
 <div id="dramaDetails"></div>
 
 <script>
+
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
@@ -23,12 +24,43 @@ async function loadDrama() {
     <h1 class="text-4xl font-bold mb-4">${drama.title}</h1>
     <img src="${drama.image}" class="w-full max-w-xl mb-6"/>
     <p class="mb-2">⭐ ${drama.rating}</p>
-    <p class="mb-2">${drama.genre}</p>
-    <p class="text-gray-400">${drama.description}</p>
+    <p class="mb-4">${drama.genre}</p>
+    <p class="mb-6">${drama.description}</p>
+
+    <button onclick="addToWatchlist()"
+            class="bg-red-600 px-6 py-2 rounded hover:bg-red-700">
+      Add to Watchlist
+    </button>
   `;
 }
 
+async function addToWatchlist() {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    alert("Please login first");
+    window.location.href = "login.html";
+    return;
+  }
+
+  const res = await fetch(`/api/watchlist/${id}`, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${token}`
+    }
+  });
+
+  const data = await res.json();
+
+  if (res.ok) {
+    alert("Added to watchlist!");
+  } else {
+    alert(data.message);
+  }
+}
+
 loadDrama();
+
 </script>
 
 </body>
