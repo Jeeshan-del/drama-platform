@@ -1,86 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Drama Platform</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-black text-white font-sans">
 
-  <!-- NAVBAR -->
-  <nav class="flex justify-between items-center px-8 py-4 bg-black bg-opacity-95 fixed w-full z-50 shadow-lg">
-    <h1 class="text-2xl font-bold text-red-600">🎬 Drama Platform</h1>
+<nav class="p-4 bg-black text-red-600 text-xl font-bold fixed w-full flex justify-between">
+  🎬 Drama Platform
 
-    <div class="hidden md:flex items-center bg-gray-900 rounded-full px-4 py-2 w-1/3">
-      <input type="text"
-             placeholder="Search dramas, movies, actors..."
-             class="bg-transparent outline-none text-white w-full" />
-    </div>
+  <input id="searchInput"
+         type="text"
+         placeholder="Search dramas..."
+         class="bg-gray-800 text-white px-4 py-1 rounded outline-none text-sm" />
+</nav>
 
-    <div class="space-x-6 flex items-center">
-      <a href="#" class="hover:text-red-500">Home</a>
-      <a href="#" class="hover:text-red-500">Dramas</a>
-      <a href="#" class="hover:text-red-500">Movies</a>
-      <a href="#" class="hover:text-red-500">Actors</a>
-      <a href="/signup" class="bg-red-600 px-4 py-2 rounded hover:bg-red-700">Sign Up</a>
-      <a href="/login" class="border border-white px-4 py-2 rounded hover:bg-white hover:text-black">Login</a>
-    </div>
-  </nav>
+<section class="pt-20 px-10">
+  <h2 class="text-3xl mb-8">🔥 Trending Now</h2>
+  <div id="dramaContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+</section>
 
-  <!-- HERO SECTION -->
-  <section class="h-screen pt-24 flex flex-col justify-center items-center text-center bg-cover bg-center"
-    style="background-image: url('https://images.unsplash.com/photo-1505685296765-3a2736de412f?q=80&w=2070');">
+<script>
 
-    <div class="bg-black bg-opacity-70 p-10 rounded-xl max-w-3xl">
-      <h2 class="text-5xl font-bold mb-4">Discover Asian Dramas & Movies</h2>
-      <p class="text-lg mb-6">Track, rate and review your favorite dramas.</p>
-      <div class="space-x-4">
-        <a href="/signup" class="bg-red-600 px-6 py-3 rounded text-lg hover:bg-red-700">Get Started</a>
-      </div>
-    </div>
-  </section>
+const container = document.getElementById("dramaContainer");
+const searchInput = document.getElementById("searchInput");
 
-  <!-- TRENDING SECTION -->
-  <section class="px-10 py-16 bg-black">
-    <h3 class="text-3xl font-bold mb-8">🔥 Trending Now</h3>
+async function loadDramas(searchTerm = "") {
+  const res = await fetch(`/api/dramas?search=${searchTerm}`);
+  const dramas = await res.json();
 
-    <div id="dramaContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6"></div>
-  </section>
+  container.innerHTML = "";
 
-  <!-- FOOTER -->
-  <footer class="bg-gray-900 text-center py-6">
-    <p class="text-gray-400">© 2026 Drama Platform. All rights reserved.</p>
-  </footer>
+  dramas.forEach(drama => {
+    container.innerHTML += `
+      <a href="drama.html?id=${drama._id}"
+         class="relative bg-gray-900 rounded-lg overflow-hidden hover:scale-105 transition duration-300">
+        <div class="absolute top-3 right-3 bg-yellow-400 text-black px-3 py-1 rounded-full font-bold">
+          ⭐ ${drama.rating}
+        </div>
+        <img src="${drama.image}" class="w-full h-60 object-cover"/>
+        <div class="p-4">
+          <h4 class="font-bold text-lg">${drama.title}</h4>
+          <p class="text-gray-400 text-sm">${drama.genre}</p>
+        </div>
+      </a>
+    `;
+  });
+}
 
-  <!-- FETCH DRAMAS SCRIPT -->
-  <script>
-    async function loadDramas() {
-      const res = await fetch("/api/dramas");
-      const dramas = await res.json();
+// Load all dramas initially
+loadDramas();
 
-      const container = document.getElementById("dramaContainer");
-      container.innerHTML = "";
+// Live search
+searchInput.addEventListener("keyup", () => {
+  loadDramas(searchInput.value);
+});
 
-      dramas.forEach(drama => {
-        container.innerHTML += `
-          <div class="relative bg-gray-900 rounded-lg overflow-hidden hover:scale-105 transition duration-300 cursor-pointer">
-            <div class="absolute top-3 right-3 bg-yellow-400 text-black text-sm font-bold px-3 py-1 rounded-full shadow-lg">
-              ⭐ ${drama.rating}
-            </div>
-            <img src="${drama.image}" class="w-full h-60 object-cover"/>
-            <div class="p-4">
-              <h4 class="font-bold text-lg">${drama.title}</h4>
-              <p class="text-gray-400 text-sm">${drama.genre}</p>
-            </div>
-          </div>
-        `;
-      });
-    }
-
-    loadDramas();
-  </script>
+</script>
 
 </body>
 </html>
