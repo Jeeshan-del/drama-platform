@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Login</title>
+  <title>Sign Up</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-black text-white flex justify-center items-center h-screen">
 
   <div class="bg-gray-900 p-8 rounded-lg w-96">
-    <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+    <h2 class="text-2xl font-bold mb-6 text-center">Create Account</h2>
 
-    <form id="loginForm" class="space-y-4">
+    <form id="signupForm" class="space-y-4">
+      <input type="text" id="username" placeholder="Username"
+             class="w-full p-2 bg-gray-800 rounded outline-none" required />
+
       <input type="email" id="email" placeholder="Email"
              class="w-full p-2 bg-gray-800 rounded outline-none" required />
 
@@ -19,35 +22,35 @@
 
       <button type="submit"
               class="w-full bg-red-600 p-2 rounded hover:bg-red-700">
-        Login
+        Sign Up
       </button>
     </form>
 
     <p class="text-sm mt-4 text-center">
-      Don't have an account?
-      <a href="signup.html" class="text-red-500">Sign Up</a>
+      Already have an account?
+      <a href="login.html" class="text-red-500">Login</a>
     </p>
   </div>
 
 <script>
-document.getElementById("loginForm").addEventListener("submit", async (e) => {
+document.getElementById("signupForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
+  const username = document.getElementById("username").value;
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  const res = await fetch("/api/login", {
+  const res = await fetch("/api/signup", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password })
+    body: JSON.stringify({ username, email, password })
   });
 
   const data = await res.json();
 
   if (res.ok) {
-    localStorage.setItem("token", data.token);
-    alert("Login successful!");
-    window.location.href = "/";
+    alert("Signup successful! Please login.");
+    window.location.href = "login.html";
   } else {
     alert(data.message);
   }
