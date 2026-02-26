@@ -32,15 +32,7 @@
            class="bg-gray-800 text-white px-4 py-1 rounded outline-none text-sm hidden md:block" />
 
     <!-- AUTH BUTTONS -->
-    <a href="signup.html"
-       class="bg-red-600 px-4 py-2 rounded hover:bg-red-700 text-sm">
-      Sign Up
-    </a>
-
-    <a href="login.html"
-       class="border border-white px-4 py-2 rounded hover:bg-white hover:text-black text-sm">
-      Login
-    </a>
+    <div id="authButtons" class="flex items-center space-x-4"></div>
 
   </div>
 
@@ -66,7 +58,7 @@
 const container = document.getElementById("dramaContainer");
 const searchInput = document.getElementById("searchInput");
 
-// Load dramas from API
+// ================= LOAD DRAMAS =================
 async function loadDramas(searchTerm = "") {
   const res = await fetch(`/api/dramas?search=${searchTerm}`);
   const dramas = await res.json();
@@ -101,6 +93,42 @@ loadDramas();
 searchInput.addEventListener("keyup", () => {
   loadDramas(searchInput.value);
 });
+
+
+// ================= AUTH UI CONTROL =================
+function renderAuthButtons() {
+  const token = localStorage.getItem("token");
+  const authDiv = document.getElementById("authButtons");
+
+  if (token) {
+    authDiv.innerHTML = `
+      <button onclick="logout()"
+              class="border border-white px-4 py-2 rounded hover:bg-white hover:text-black text-sm">
+        Logout
+      </button>
+    `;
+  } else {
+    authDiv.innerHTML = `
+      <a href="signup.html"
+         class="bg-red-600 px-4 py-2 rounded hover:bg-red-700 text-sm">
+        Sign Up
+      </a>
+
+      <a href="login.html"
+         class="border border-white px-4 py-2 rounded hover:bg-white hover:text-black text-sm">
+        Login
+      </a>
+    `;
+  }
+}
+
+function logout() {
+  localStorage.removeItem("token");
+  alert("Logged out successfully");
+  window.location.reload();
+}
+
+renderAuthButtons();
 
 </script>
 
