@@ -1,52 +1,87 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Drama Platform</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f0f0f;
-      color: white;
-      text-align: center;
-    }
-    header {
-      padding: 20px;
-      font-size: 24px;
-      font-weight: bold;
-      background: #1c1c1c;
-    }
-    .hero {
-      margin-top: 100px;
-    }
-    button {
-      padding: 12px 20px;
-      margin: 10px;
-      border: none;
-      background: #e50914;
-      color: white;
-      cursor: pointer;
-      font-size: 16px;
-      border-radius: 5px;
-    }
-    button:hover {
-      background: #ff1e2d;
-    }
-  </style>
+  <title>Drama Platform</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
 
-<header>🎬 Drama Platform</header>
+<body class="bg-black text-white font-sans">
 
-<div class="hero">
-  <h1>Discover Asian Dramas & Movies</h1>
-  <p>Track, rate and review your favorite dramas.</p>
+  <!-- NAVBAR -->
+  <nav class="flex justify-between items-center px-8 py-4 bg-black bg-opacity-90 fixed w-full z-50">
+    <h1 class="text-2xl font-bold text-red-600">🎬 Drama Platform</h1>
+    <div class="space-x-6">
+      <a href="#" class="hover:text-red-500">Home</a>
+      <a href="#" class="hover:text-red-500">Dramas</a>
+      <a href="#" class="hover:text-red-500">Movies</a>
+      <a href="#" class="hover:text-red-500">Actors</a>
+      <a href="/signup" class="bg-red-600 px-4 py-2 rounded hover:bg-red-700">Sign Up</a>
+      <a href="/login" class="border border-white px-4 py-2 rounded hover:bg-white hover:text-black">Login</a>
+    </div>
+  </nav>
 
-  <button onclick="location.href='/signup'">Sign Up</button>
-  <button onclick="location.href='/login'">Login</button>
-</div>
+  <!-- HERO SECTION -->
+  <section class="h-screen flex flex-col justify-center items-center text-center bg-cover bg-center"
+    style="background-image: url('https://images.unsplash.com/photo-1505685296765-3a2736de412f?q=80&w=2070');">
+
+    <div class="bg-black bg-opacity-70 p-10 rounded-xl">
+      <h2 class="text-5xl font-bold mb-4">Discover Asian Dramas & Movies</h2>
+      <p class="text-lg mb-6">Track, rate and review your favorite dramas.</p>
+      <div class="space-x-4">
+        <a href="/signup" class="bg-red-600 px-6 py-3 rounded text-lg hover:bg-red-700">Get Started</a>
+        <a href="#" class="border border-white px-6 py-3 rounded text-lg hover:bg-white hover:text-black">Browse</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRENDING SECTION -->
+  <section class="px-10 py-16">
+    <h3 class="text-3xl font-bold mb-8">🔥 Trending Now</h3>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      
+      <!-- CARD -->
+      <div class="bg-gray-900 rounded-lg overflow-hidden hover:scale-105 transition duration-300">
+        <img src="https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?q=80&w=800" class="w-full h-60 object-cover" />
+        <div class="p-4">
+          <h4 class="font-bold text-lg">Moonlight Lovers</h4>
+          <p class="text-gray-400 text-sm">Romance • Historical</p>
+        </div>
+      </div>
+
+      <div class="bg-gray-900 rounded-lg overflow-hidden hover:scale-105 transition duration-300">
+        <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=800" class="w-full h-60 object-cover" />
+        <div class="p-4">
+          <h4 class="font-bold text-lg">City of Secrets</h4>
+          <p class="text-gray-400 text-sm">Thriller • Crime</p>
+        </div>
+      </div>
+
+      <div class="bg-gray-900 rounded-lg overflow-hidden hover:scale-105 transition duration-300">
+        <img src="https://images.unsplash.com/photo-1542204165-65bf26472b9b?q=80&w=800" class="w-full h-60 object-cover" />
+        <div class="p-4">
+          <h4 class="font-bold text-lg">Hidden Truth</h4>
+          <p class="text-gray-400 text-sm">Mystery • Drama</p>
+        </div>
+      </div>
+
+      <div class="bg-gray-900 rounded-lg overflow-hidden hover:scale-105 transition duration-300">
+        <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=800" class="w-full h-60 object-cover" />
+        <div class="p-4">
+          <h4 class="font-bold text-lg">Eternal Promise</h4>
+          <p class="text-gray-400 text-sm">Fantasy • Romance</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-900 text-center py-6">
+    <p class="text-gray-400">© 2026 Drama Platform. All rights reserved.</p>
+  </footer>
 
 </body>
 </html>
