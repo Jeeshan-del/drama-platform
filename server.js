@@ -1,47 +1,47 @@
-// Load environment variables FIRST
-require('dotenv').config();
+// ===============================
+// IMPORTS
+// ===============================
+const express = require("express");
+const mongoose = require("mongoose");
+require("dotenv").config();
 
-console.log("ENV TEST:", process.env.MONGO_URI);
-
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-
-// Create express app
+// ===============================
+// APP INITIALIZATION
+// ===============================
 const app = express();
 
-// Middlewares
+// ===============================
+// MIDDLEWARE
+// ===============================
 app.use(express.json());
-app.use(cors());
+app.use(express.urlencoded({ extended: true }));
 
-// ==============================
-// 🔥 Connect To MongoDB Atlas
-// ==============================
-const connectDB = async () => {
-    try {
-        await mongoose.connect(process.env.MONGO_URI);
-        console.log('✅ MongoDB Connected Successfully');
-    } catch (error) {
-        console.error('❌ MongoDB Connection Failed:', error.message);
-        process.exit(1);
-    }
-};
+// Serve static files from "public" folder
+app.use(express.static("public"));
 
-// Call DB connection
-connectDB();
+// ===============================
+// DATABASE CONNECTION
+// ===============================
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log("✅ MongoDB Connected Successfully");
+  })
+  .catch((error) => {
+    console.error("❌ MongoDB Connection Failed:", error.message);
+  });
 
-// ==============================
-// Basic Test Route
-// ==============================
-app.get('/', (req, res) => {
-    res.send('🎬 Drama Platform API Running...');
+// ===============================
+// TEST API ROUTE
+// ===============================
+app.get("/api/test", (req, res) => {
+  res.json({ message: "API is working correctly 🚀" });
 });
 
-// ==============================
-// Server Listen
-// ==============================
+// ===============================
+// SERVER START
+// ===============================
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
